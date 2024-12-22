@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Viewer</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .image-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      justify-content: center;
+      align-items: center;
+    }
+    .image-container img {
+        width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    height: 100vh;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      color: white;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <input type="file" id="imageInput" accept="image/*">
+  <div class="image-container" id="imageContainer">
+    <button class="close-btn" id="closeBtn">Close</button>
+    <img id="displayImage" src="" alt="Selected Image">
+  </div>
+
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const imageContainer = document.getElementById('imageContainer');
+    const displayImage = document.getElementById('displayImage');
+    const closeBtn = document.getElementById('closeBtn');
+
+    imageInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          displayImage.src = e.target.result;
+          imageContainer.style.display = 'flex';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    closeBtn.addEventListener('click', () => {
+      imageContainer.style.display = 'none';
+      imageInput.value = ''; // Reset the input value
+    });
+  </script>
+</body>
+</html>
